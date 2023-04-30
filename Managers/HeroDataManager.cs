@@ -115,7 +115,7 @@ public class HeroDataManager : MonoBehaviour
         heroDataList.Add(heroData);
 
         // 마법사
-         stat = new()
+        stat = new()
         {
             Hp = 350,
             OriginHp = 350,
@@ -176,7 +176,7 @@ public class HeroDataManager : MonoBehaviour
         List<CharacterStatData> characterStatList = new List<CharacterStatData>();
         List<HeroData> heroDataList = new List<HeroData>();
 
-        foreach(var item in heroDatas)
+        foreach (var item in heroDatas)
         {
             characterStatList.Add(item.Value.Stat);
             heroDataList.Add(item.Value.Herodata);
@@ -192,7 +192,7 @@ public class HeroDataManager : MonoBehaviour
     {
         HeroDataList newHeroDataList = JsonManager.FromJson<HeroDataList>("HeroDatas");
 
-        if(newHeroDataList == null)
+        if (newHeroDataList == null)
         {
             GenerateDefaultHeroData();
             newHeroDataList = JsonManager.FromJson<HeroDataList>("DefaultHeroDatas");
@@ -215,19 +215,24 @@ public class HeroDataManager : MonoBehaviour
             heroDatas.Add(newHeroInfo.Herodata.HeroCode, newHeroInfo);
         }
 
+        string skillImagePath;
+        Sprite skillImg;
         SkillData data;
         data = new()
         {
-            Name = "방패 휘두르기",
+            Name = "SwingShield",
             Id = "000000",
             Mana = 10,
             Cooldown = 10,
         };
         heroDatas[(int)HeroJobs.Tanker].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Tanker}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Tanker].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "방패 올리기",
+            Name = "RisingShield",
             Id = "000100",
             Mana = 50,
             Cooldown = 20,
@@ -235,10 +240,13 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 10,
         };
         heroDatas[(int)HeroJobs.Tanker].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Tanker}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Tanker].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "맹약",
+            Name = "Swear",
             Id = "000200",
             Mana = 30,
             Cooldown = 20,
@@ -247,10 +255,13 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 10,
         };
         heroDatas[(int)HeroJobs.Tanker].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Tanker}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Tanker].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "수호",
+            Name = "Guard",
             Id = "000300",
             Mana = 100,
             Cooldown = 20,
@@ -259,29 +270,38 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 10,
         };
         heroDatas[(int)HeroJobs.Tanker].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Tanker}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Tanker].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "정화",
+            Name = "Purification",
             Id = "010000",
             Mana = 5,
             Cooldown = 5,
         };
         heroDatas[(int)HeroJobs.Healer].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Healer}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Healer].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "치유",
+            Name = "Healing",
             Id = "010100",
             Mana = 10,
             Cooldown = 5,
             isTargeting = true,
         };
         heroDatas[(int)HeroJobs.Healer].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Healer}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Healer].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "광역 치유",
+            Name = "WideAreaHealing",
             Id = "010200",
             Mana = 50,
             Cooldown = 10,
@@ -289,10 +309,13 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 7,
         };
         heroDatas[(int)HeroJobs.Healer].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Healer}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Healer].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "기도",
+            Name = "Pray",
             Id = "010300",
             Mana = 200,
             Cooldown = 30,
@@ -300,10 +323,13 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 10,
         };
         heroDatas[(int)HeroJobs.Healer].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Healer}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Healer].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "파이어 볼",
+            Name = "FireBall",
             Id = "020000",
             Mana = 5,
             Cooldown = 3,
@@ -311,10 +337,13 @@ public class HeroDataManager : MonoBehaviour
             CastingTime = 1,
         };
         heroDatas[(int)HeroJobs.Mage].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Mage}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Mage].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "파이어 쉴드",
+            Name = "FireShield",
             Id = "020100",
             Mana = 10,
             Cooldown = 15,
@@ -323,10 +352,13 @@ public class HeroDataManager : MonoBehaviour
             BuffDuration = 5,
         };
         heroDatas[(int)HeroJobs.Mage].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Mage}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Mage].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "파이어 필드",
+            Name = "FireField",
             Id = "020200",
             Mana = 50,
             Cooldown = 20,
@@ -334,10 +366,13 @@ public class HeroDataManager : MonoBehaviour
             CastingTime = 3,
         };
         heroDatas[(int)HeroJobs.Mage].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Mage}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Mage].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "메테오",
+            Name = "Meteor",
             Id = "020300",
             Mana = 200,
             Cooldown = 30,
@@ -346,43 +381,58 @@ public class HeroDataManager : MonoBehaviour
             isSelectLocation = true,
         };
         heroDatas[(int)HeroJobs.Mage].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.Mage}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.Mage].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "강타",
+            Name = "HitHard",
             Id = "030000",
             Mana = 5,
             Cooldown = 5,
         };
         heroDatas[(int)HeroJobs.SwordMaster].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.SwordMaster}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.SwordMaster].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "신체 강화",
+            Name = "Strength",
             Id = "030100",
             Mana = 10,
             Cooldown = 20,
         };
         heroDatas[(int)HeroJobs.SwordMaster].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.SwordMaster}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.SwordMaster].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "돌진",
+            Name = "Rush",
             Id = "030200",
             Mana = 50,
             Cooldown = 10
         };
         heroDatas[(int)HeroJobs.SwordMaster].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.SwordMaster}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.SwordMaster].skill.skillImages.Add(data.Id, skillImg);
 
         data = new()
         {
-            Name = "도약",
+            Name = "Leap",
             Id = "030300",
             Mana = 200,
             Cooldown = 10,
             isSelectLocation = true,
         };
         heroDatas[(int)HeroJobs.SwordMaster].skill.skilldatas.Add(data.Id, data);
+        skillImagePath = $"Hero/{HeroJobs.SwordMaster}/Sprites/Skill/{data.Name}";
+        skillImg = Resources.Load<Sprite>(skillImagePath);
+        heroDatas[(int)HeroJobs.SwordMaster].skill.skillImages.Add(data.Id, skillImg);
     }
 
     public HeroInfo GetHerodata(HeroJobs job)

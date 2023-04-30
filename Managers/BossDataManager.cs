@@ -41,7 +41,7 @@ public class BossDataManager : MonoBehaviour
         {
             MobTitle = "«¡∑Œ≈‰ ≈∏¿‘¿« æ«∏∂",
             MobName = "DevilOfPrototype",
-            MobLevel = MobLevel.Easy,
+            MobDifficulty = MobDifficulty.Easy,
         };
 
         savedBossName = newBossData.MobData.MobName;
@@ -84,13 +84,13 @@ public class BossDataManager : MonoBehaviour
         {
             MobTitle = "«¡∑Œ≈‰ ≈∏¿‘¿« æ«∏∂",
             MobName = "DevilOfPrototype",
-            MobLevel = MobLevel.Normal,
+            MobDifficulty = MobDifficulty.Normal,
         };
 
         newBossData.StatData = new()
         {
-            Hp = 1000,
-            OriginHp = 3000,
+            Hp = 5000,
+            OriginHp = 5000,
             Mp = 200,
             OriginMp = 200,
             OriginDmg = 3,
@@ -132,7 +132,7 @@ public class BossDataManager : MonoBehaviour
         {
             MobTitle = "Ω∫ƒÃ∑π≈Ê ≈∑",
             MobName = "SkeletonKing",
-            MobLevel = MobLevel.Easy,
+            MobDifficulty = MobDifficulty.Easy,
         };
 
         savedBossName = newBossData.MobData.MobName;
@@ -176,7 +176,7 @@ public class BossDataManager : MonoBehaviour
         {
             MobTitle = "Ω∫ƒÃ∑π≈Ê ≈∑",
             MobName = "SkeletonKing",
-            MobLevel = MobLevel.Normal,
+            MobDifficulty = MobDifficulty.Normal,
         };
 
         newBossData.StatData = new()
@@ -248,7 +248,7 @@ public class BossDataManager : MonoBehaviour
     {
         List<BossData> targetList = BossDatas[bossInfo.MobData.MobName];
 
-        targetList[(int)bossInfo.MobData.MobLevel].MobData.isHunted = true;
+        targetList[(int)bossInfo.MobData.MobDifficulty].MobData.isHunted = true;
         SaveMobDatas();
     }
 }

@@ -112,7 +112,7 @@ public class UISet_SelectedHero : MonoBehaviour
 
     public void OnClickUI()
     {
-        Panel_HeroList heroListUI = PartySceneUIManager.Instance.Panel_HeroList;
+        Panel_HeroList heroListUI = PartyScene.Instance.Panel_HeroList;
 
         if (heroListUI.CurSelectedHeroJob.Equals(HeroJobs.None))
         {

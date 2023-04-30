@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum CommonPopup
 {
@@ -21,14 +23,28 @@ public class GameManager : MonoBehaviour
 
     public Dictionary<int, HeroInfo> RegisteredHero { get; private set; }
     public MobInfo SelectedBoss { get; private set; }
+    public string PreSceneName;
 
     #endregion
 
     public BaseScene CurScene;
-    public string PreSceneName;
+
+    #region UI
 
     [SerializeField]
     private GameObject pfb_commonPanel;
+
+    [SerializeField]
+    private GameObject pnl_commonUI;
+
+    [SerializeField]
+    private Button btn_backScene;
+
+    [SerializeField]
+    private Image img_fade;
+    private int fadeTime = 10;
+
+    #endregion
 
     #region Time
 
@@ -41,6 +57,8 @@ public class GameManager : MonoBehaviour
     public Action tenMinutesEvent = null;
     public Action<int> everyHourEvent = null;
     public Action<int> everyDayEvent = null;
+
+    PlayableDirector test;
 
     #endregion
 
@@ -63,17 +81,67 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(this);
             RegisteredHero = new Dictionary<int, HeroInfo>();
         }
+        else
+        {
+            Destroy(gameObject);
+        }
 
         LoadGameData();
-        // curTime = new DateInGame(0, 0, 0);
     }
 
     private void Start()
     {
+        btn_backScene.onClick.AddListener(LoadPreScene);
         StartCoroutine(DayTimer());
 
         SceneManager.sceneUnloaded -= ResetGameManagerOnUnloaded;
         SceneManager.sceneUnloaded += ResetGameManagerOnUnloaded;
+    }
+
+    public void LoadPreScene()
+    {
+        CurScene.LoadPreScene();
+    }
+
+    public IEnumerator FadeIn()
+    {
+        pnl_commonUI.SetActive(false);
+        img_fade.gameObject.SetActive(true);
+        img_fade.color = new Color(0, 0, 0, 0);
+
+        float alphaValue = 0;
+        while (alphaValue < 1)
+        {
+            alphaValue += Time.deltaTime;
+            img_fade.color = new Color(0, 0, 0, alphaValue);
+            yield return null;
+        }
+
+        img_fade.gameObject.SetActive(false);
+        pnl_commonUI.SetActive(true);
+    }
+
+    public IEnumerator FadeOut()
+    {
+        pnl_commonUI.SetActive(false);
+        img_fade.gameObject.SetActive(true);
+        img_fade.color = new Color(0, 0, 0, 1);
+
+        float alphaValue = 1;
+        while (alphaValue > 0)
+        {
+            alphaValue -= Time.deltaTime;
+            img_fade.color = new Color(0, 0, 0, alphaValue);
+            yield return null;
+        }
+
+        img_fade.gameObject.SetActive(false);
+        pnl_commonUI.SetActive(true);
+    }
+
+    public void SetExitBtn(bool isOn)
+    {
+        btn_backScene.gameObject.SetActive(isOn);
     }
 
     public void ResetGameManagerOnUnloaded(Scene scene)
@@ -140,12 +208,6 @@ public class GameManager : MonoBehaviour
         BossDataManager.Instance.BossIsHunted(SelectedBoss);
         Managers.Instance.UI.Panel_Result.OpenPanel(SelectedBoss.MobRewards);
     }
-
-    //private void OnApplicationQuit()
-    //{
-    //    CurScene.SaveSceneData();
-    //    CurScene?.SaveDataPublisher?.Invoke();
-    //}
 
     private IEnumerator DayTimer()
     {

@@ -10,7 +10,7 @@ public class Panel_Control : MonoBehaviour
     [SerializeField]
     private Panel_HeroInfo_Control heroInfo;
 
-    public void SetSkillInformation(SkillCooldownInfo info, int skillNum)
+    public void SetSkillInformation(HeroSkill info, int skillNum)
     {
         heroSkill.SetSkillInformation(info, skillNum);
     }

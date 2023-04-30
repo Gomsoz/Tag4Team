@@ -15,7 +15,7 @@ public class Panel_CharacterInfos : MonoBehaviour
     #region UI Variable
 
     [SerializeField]
-    private Button btn_heroImage;
+    private Button btn_changeHero;
     [SerializeField]
     private TMP_Text txt_curHp;
     [SerializeField]
@@ -31,7 +31,7 @@ public class Panel_CharacterInfos : MonoBehaviour
 
     // 이미지가 없기 때문에 임시로 텍스트를 넣음
     [SerializeField]
-    private TMP_Text[] heroSkillImages = new TMP_Text[4];
+    private Image[] heroSkillImages = new Image[4];
 
     [SerializeField]
     private Image img_heroImage;
@@ -40,7 +40,7 @@ public class Panel_CharacterInfos : MonoBehaviour
 
     private void Start()
     {
-        btn_heroImage.onClick.AddListener(OpenSelectCharacterPanel);
+        btn_changeHero.onClick.AddListener(OpenSelectCharacterPanel);
         SetHeroData(HeroJobs.Tanker);
     }
 
@@ -69,7 +69,7 @@ public class Panel_CharacterInfos : MonoBehaviour
         foreach (var skillID in heroSkillData)
         {
             SkillData data = SelectedHeroData.skill.GetSkillData(skillID);
-            heroSkillImages[idx].text = data.Name;
+            heroSkillImages[idx].sprite = SelectedHeroData.skill.GetSkillImage(skillID);
             idx++;
         }
 
@@ -90,7 +90,6 @@ public class Panel_CharacterInfos : MonoBehaviour
 
     private void UpdateHeroStatUI()
     {
-        Debug.Log(SelectedHeroData.Stat.MaxHp);
         txt_curHp.text = SelectedHeroData.Stat.Hp.ToString();
         txt_maxHp.text = SelectedHeroData.Stat.MaxHp.ToString();
         txt_curMp.text = SelectedHeroData.Stat.Mp.ToString();

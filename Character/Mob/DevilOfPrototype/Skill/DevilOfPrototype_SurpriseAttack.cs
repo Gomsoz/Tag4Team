@@ -36,7 +36,6 @@ public class DevilOfPrototype_SurpriseAttack : MobSkill
         skillOwner.transform.position = appearanceLocation;
 
         StartCoroutine(ChargeSkill(3, Charge));
-
     }
 
     public void Charge()

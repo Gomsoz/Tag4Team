@@ -31,21 +31,6 @@ public class Panel_HeroList : MonoBehaviour
     [SerializeField]
     private UISet_SelectedHero[] ListedHeroes = new UISet_SelectedHero[4];
 
-    //private void Start()
-    //{
-    //    SetHeroDataTemporarily();
-    //}
-
-    //private void SetHeroDataTemporarily()
-    //{
-    //    int cnt = 1;
-    //    foreach(var item in ListedHeroes)
-    //    {
-    //        item.setHeroData((HeroJobs)cnt);
-    //        cnt++;
-    //    }
-    //}
-
     public List<PartySlotData> SavePartySlotData()
     {
         List<PartySlotData> partySlotDatas = new List<PartySlotData>();

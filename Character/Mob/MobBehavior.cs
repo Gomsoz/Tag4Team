@@ -15,7 +15,7 @@ public enum MobState
 
 public class MobBehavior : CharacterBehavior
 {
-    private MobState state = MobState.Normal;
+    private MobState state = MobState.Stop;
     public MobState State { get { return state; } }
 
     private MobInfo thisMobInfo;
@@ -25,8 +25,9 @@ public class MobBehavior : CharacterBehavior
     protected CharacterBehavior targetHero;
 
     private string MobName;
-    [SerializeField]
-    private List<MobSkill> mobSkills = new();
+    private MobDifficulty thisMobDifficulty;
+    private int mobLevel = 0;
+    public Action<int> UpdateMobLevel = null;
 
     protected Action ActionInProgress;
 
@@ -64,6 +65,20 @@ public class MobBehavior : CharacterBehavior
 
     public Action<float> ChangeDistancePublisher = null;
 
+    [SerializeField]
+    private GameObject appearanceDirector;
+
+    [SerializeField]
+    private EndTimeline endTimeline;
+
+    public float HpRatio
+    {
+        get
+        {
+            return Hp / MaxHp;
+        }
+    }
+
     #endregion
 
     private void Update()
@@ -93,12 +108,6 @@ public class MobBehavior : CharacterBehavior
         attackRange_angle2 = new Vector3(statData.AttackRange_Angle2_x, statData.AttackRange_Angle2_y, 0);
 
         MobName = newMobInfo.MobData.MobName;
-        
-
-        foreach (var item in mobSkills)
-        {
-            item.SkillInit(this);
-        }
 
         Anim = transform.GetComponentInChildren<Animator>();
 
@@ -107,6 +116,30 @@ public class MobBehavior : CharacterBehavior
 
         Managers.Instance.UI.Panel_MobState.SetMob(this);
         target = GameObject.Find("Player").GetComponent<PlayerController>();
+
+        if (appearanceDirector != null)
+        {
+            appearanceDirector.SetActive(true);
+            endTimeline.EndTimeLineEvent += EndAppearanceCutScene;
+        }
+    }
+
+    public void EndAppearanceCutScene()
+    {
+        StartCoroutine(GameManager.Instance.FadeOut());
+        GameScene.Instance.EndAppearanceCutScene();
+        StartCoroutine(WaitEndCutScene(2));
+    }
+
+    private IEnumerator WaitEndCutScene(float seconds)
+    {
+        while (seconds >= 0)
+        {
+            seconds -= Time.deltaTime;
+            yield return null;
+        }
+
+        state = MobState.Normal;
     }
 
     public void StartMove()
@@ -183,8 +216,36 @@ public class MobBehavior : CharacterBehavior
     public override void Damaged(CharacterBehavior Attacker, int value)
     {
         base.Damaged(Attacker, value);
-        Debug.Log("DAMGED");
         Managers.Instance.UI.Panel_MobState.UpdateMobHp(this);
+
+        if(thisMobDifficulty.Equals(MobDifficulty.Easy) == false)
+            UpdateLevel();
+    }
+
+    private void UpdateLevel()
+    {
+        switch (thisMobDifficulty)
+        {
+            case MobDifficulty.Normal:
+                if(mobLevel == 0 && HpRatio <= 0.5)
+                {
+                    mobLevel = 1;
+                    UpdateMobLevel?.Invoke(mobLevel);
+                }                    
+                break;
+            case MobDifficulty.Hard:
+                if (mobLevel == 0 && HpRatio <= 0.7)
+                {
+                    mobLevel = 1;
+                    UpdateMobLevel?.Invoke(mobLevel);
+                }
+                else if (mobLevel == 1 && HpRatio <= 0.3)
+                {
+                    mobLevel = 2;
+                    UpdateMobLevel?.Invoke(mobLevel);
+                }
+                break;
+        }
     }
 
     public override void Death()

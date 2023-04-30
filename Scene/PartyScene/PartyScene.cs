@@ -10,6 +10,22 @@ public class PartyScene : BaseScene
     private static PartyScene instance;
     public static PartyScene Instance { get { return instance; } }
 
+    #region
+
+    [SerializeField]
+    private GameObject pnl_viewMenu;
+
+    [field: SerializeField]
+    public Panel_HeroList Panel_HeroList { get; private set; }
+
+    [field: SerializeField]
+    public Panel_PartyBuff Panel_PartyBuff { get; private set; }
+
+    [field: SerializeField]
+    public GameObject Panel_Character { get; private set; }
+
+    #endregion
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,8 +50,8 @@ public class PartyScene : BaseScene
             partySceneData = SaveDefaultSceneData();
         }
 
-        PartySceneUIManager.Instance.Panel_HeroList.LoadPartySlotData(partySceneData.SlotDatas.ToList<PartySlotData>());
-        PartySceneUIManager.Instance.Panel_PartyBuff.LoadPartyBuffData(partySceneData.PartyBuff);
+        Panel_HeroList.LoadPartySlotData(partySceneData.SlotDatas.ToList<PartySlotData>());
+        Panel_PartyBuff.LoadPartyBuffData(partySceneData.PartyBuff);
         base.LoadSceneData();
     }
 
@@ -57,7 +73,7 @@ public class PartyScene : BaseScene
             AmorPerLevel = 0.05f,
         };
 
-        partySceneData.SlotDatas = PartySceneUIManager.Instance.Panel_HeroList.SavePartySlotData().ToArray();
+        partySceneData.SlotDatas = Panel_HeroList.SavePartySlotData().ToArray();
         partySceneData.PartyBuff = data;
 
         JsonManager.ToJson(partySceneData, "PartyDatas");
@@ -70,10 +86,39 @@ public class PartyScene : BaseScene
 
         PartySceneData partySceneData = new PartySceneData();
 
-        partySceneData.SlotDatas = PartySceneUIManager.Instance.Panel_HeroList.SavePartySlotData().ToArray();
-        partySceneData.PartyBuff = PartySceneUIManager.Instance.Panel_PartyBuff.PartyBuffData;
+        partySceneData.SlotDatas = Panel_HeroList.SavePartySlotData().ToArray();
+        partySceneData.PartyBuff = Panel_PartyBuff.PartyBuffData;
 
         JsonManager.ToJson(partySceneData, "PartyDatas");
+    }
+
+    public void CloseAllPanel()
+    {
+        pnl_viewMenu.SetActive(false);
+        Panel_PartyBuff.gameObject.SetActive(false);
+        Panel_HeroList.gameObject.SetActive(false);
+        Panel_Character.gameObject.SetActive(false);
+    }
+
+    public void OpenPartyBuffPanel()
+    {
+        CloseAllPanel();
+        pnl_viewMenu.SetActive(true);
+        Panel_PartyBuff.gameObject.SetActive(true);
+    }
+
+    public void OpenHeroListPanel()
+    {
+        CloseAllPanel();
+        pnl_viewMenu.SetActive(true);
+        Panel_HeroList.gameObject.SetActive(true);
+    }
+
+    public void OpenCharacterPanel()
+    {
+        CloseAllPanel();
+        pnl_viewMenu.SetActive(true);
+        Panel_Character.gameObject.SetActive(true);
     }
 }
 

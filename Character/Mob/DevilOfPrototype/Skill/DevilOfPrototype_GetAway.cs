@@ -13,6 +13,16 @@ public class DevilOfPrototype_GetAway : MobSkill
     private float pushTime = 0.1f;
     private int skillDamage = 200;
 
+    #region Level 0
+
+    private float lv0_radius = 3f;
+    private int lv0_damage = 200;
+
+    private float lv1_radius = 5f;
+    private int lv1_damage = 300;
+
+    #endregion
+
     public override void SkillInit(MobBehavior owner)
     {
         thisSkill = this;
@@ -28,11 +38,49 @@ public class DevilOfPrototype_GetAway : MobSkill
         base.SkillInit(owner);
     }
 
-    public override void UseSkill(Action _endSkillCallback = null)
+    protected override void UseLv0Skill()
     {
-        base.UseSkill(_endSkillCallback);
+        base.UseLv0Skill();
 
-        rangeController.StartFill(3, FullSkillRange);     
+        rangeController.StartFill(3, FullSkillRange);
+    }
+
+    protected override void UseLv1Skill()
+    {
+        base.UseLv1Skill();
+
+        Collider2D[] colls = Physics2D.OverlapCircleAll(skillOwner.transform.position, radius);
+        centerPos = skillOwner.transform.position;
+        Vector3 pushDirection = Vector3.zero;
+
+        if (colls != null)
+        {
+            foreach (var item in colls)
+            {
+                if (item.CompareTag(Utils_Tag.Player) == false && item.CompareTag(Utils_Tag.Hero) == false)
+                    continue;
+
+                item.transform.position = centerPos;
+            }
+        }
+
+        rangeController.StartFill(5, FullSkillRange);
+    }
+
+    protected override void SetSkillLv0()
+    {
+        base.SetSkillLv0();
+
+        radius = lv0_radius;
+        skillDamage = lv0_damage;
+    }
+
+    protected override void SetSkillLv1()
+    {
+        base.SetSkillLv1();
+
+        radius = lv1_radius;
+        skillDamage = lv1_damage;
     }
 
     public void FullSkillRange()

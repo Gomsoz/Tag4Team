@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MobSkill : MonoBehaviour
 {
+    protected int skillLevel;
+
     protected float minSkillRange;
     protected float maxSkillRange;
     protected MobBehavior skillOwner;
@@ -28,6 +30,41 @@ public class MobSkill : MonoBehaviour
         endSkillCallback = _endSkillCallback;
         skillOwner.RemoveSkill(this);
         skillOwner.StartSkillCooldown(skillCooldownInfo);
+
+        if(skillLevel == 0)
+            UseLv0Skill();
+        else if(skillLevel == 1)
+            UseLv1Skill();
+    }
+
+    protected virtual void UseLv0Skill()
+    {
+
+    }
+
+    protected virtual void UseLv1Skill()
+    {
+
+    }
+
+    public void SetSkillLv(int level)
+    {
+        skillLevel = level;
+
+        if (skillLevel == 0)
+            SetSkillLv0();
+        else if (skillLevel == 1)
+            SetSkillLv1();
+    }
+
+    protected virtual void SetSkillLv0()
+    {
+
+    }
+
+    protected virtual void SetSkillLv1()
+    {
+
     }
 
     public virtual void EndSkill()

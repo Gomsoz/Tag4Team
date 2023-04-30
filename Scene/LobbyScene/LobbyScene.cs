@@ -21,6 +21,7 @@ public class LobbyScene : BaseScene
         base.InitScene();
 
         SceneName = "LobbyScene";
+        GameManager.Instance.SetExitBtn(false);
     }
 
     public void LoadScene(string sceneName)

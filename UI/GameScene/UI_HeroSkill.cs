@@ -10,7 +10,7 @@ public class UI_HeroSkill : MonoBehaviour
     private SkillCooldownInfo skillCooldownInfo;
 
     [SerializeField]
-    private TMP_Text text_skillName;
+    private Image img_skill;
 
     [SerializeField]
     private GameObject cooldownGroup;
@@ -21,7 +21,7 @@ public class UI_HeroSkill : MonoBehaviour
 
     private Action callback;
 
-    public void SetSkillInformation(SkillCooldownInfo info)
+    public void SetSkillInformation(HeroSkill info)
     {
         if (skillCooldownInfo != null)
         {
@@ -29,12 +29,12 @@ public class UI_HeroSkill : MonoBehaviour
             skillCooldownInfo.LeftCooldownPublisher -= LeftCooldownListener;
         }
 
-        skillCooldownInfo = info;
+        skillCooldownInfo = info.SkillCooldownInfo;
 
-        text_skillName.text = skillCooldownInfo.skillName;
+        img_skill.sprite = info.SkillSprite;
 
-        info.LeftCooldownPublisher -= LeftCooldownListener;
-        info.LeftCooldownPublisher += LeftCooldownListener;
+        skillCooldownInfo.LeftCooldownPublisher -= LeftCooldownListener;
+        skillCooldownInfo.LeftCooldownPublisher += LeftCooldownListener;
     }
 
     public void LeftCooldownListener(float leftTime)

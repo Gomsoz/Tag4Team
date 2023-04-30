@@ -13,6 +13,9 @@ public class Panel_CommonUI : MonoBehaviour
     private Button btn_setting;
 
     [SerializeField]
+    private Toggle tgl_inventory;
+
+    [SerializeField]
     private TMP_Text txt_day;
 
     [SerializeField]
@@ -21,14 +24,20 @@ public class Panel_CommonUI : MonoBehaviour
     [SerializeField]
     private TMP_Text txt_minute;
 
+    [SerializeField]
+    private TMP_Text txt_coinAmount;
+
     private void Start()
     {
         TimeListener();
 
         btn_back.onClick.AddListener(OnClickBackBtn);
         btn_setting.onClick.AddListener(OnClickSettingBtn);
+        tgl_inventory.onValueChanged.AddListener(ToggleInventoryBtn);
 
         GameManager.Instance.tenMinutesEvent += TimeListener;
+
+        txt_coinAmount.text = Inventory.Instance.Coins.ToString();
     }
 
     public void OnClickBackBtn()
@@ -39,6 +48,11 @@ public class Panel_CommonUI : MonoBehaviour
     public void OnClickSettingBtn()
     {
 
+    }
+
+    public void ToggleInventoryBtn(bool isOn)
+    {
+        Inventory.Instance.ToggleInventory(isOn);
     }
 
     public void TimeListener()

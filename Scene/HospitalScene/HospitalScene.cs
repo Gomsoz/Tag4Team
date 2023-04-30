@@ -24,6 +24,12 @@ public class HospitalScene : BaseScene
     [field : SerializeField]
     public Panel_HealingService Panel_HealingService { get; private set; }
 
+    [SerializeField]
+    private Toggle tgl_openHealingPnl;
+
+    [field: SerializeField]
+    public GameObject Pnl_Healing { get; private set; }
+
     private void Awake()
     {
         if (Instance == null)
@@ -41,6 +47,9 @@ public class HospitalScene : BaseScene
         }
 
         SceneName = "HospitalScene";
+        fixedPreScene = "LobbyScene";
+
+        tgl_openHealingPnl.onValueChanged.AddListener(ToggleHealingPanel);
 
         base.InitScene();
     }
@@ -95,6 +104,12 @@ public class HospitalScene : BaseScene
         hospitalData.SlotDatas = Panel_HealingService.SaveSlotData().ToArray();
 
         JsonManager.ToJson(hospitalData, "HospitalDatas");
+    }
+
+    public void ToggleHealingPanel(bool isOn)
+    {
+        Debug.Log(isOn);
+        Pnl_Healing.gameObject.SetActive(isOn);
     }
 }
 

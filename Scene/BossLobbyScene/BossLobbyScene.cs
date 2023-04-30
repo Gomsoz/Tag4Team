@@ -34,6 +34,7 @@ public class BossLobbyScene : BaseScene
         base.InitScene();
 
         SceneName = "BossLobbyScene";
+        fixedPreScene = "LobbyScene";
     }
 
     public override void LoadSceneData()

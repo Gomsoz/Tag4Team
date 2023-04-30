@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum MobLevel
+public enum MobDifficulty
 {
     Easy,
     Normal,
@@ -13,7 +13,7 @@ public enum MobLevel
 }
 public class Panel_SelectBoss : MonoBehaviour
 {
-    private MobLevel level = MobLevel.Easy;
+    private MobDifficulty level = MobDifficulty.Easy;
     private MobInfo mobInfo;
 
     private List<BossData> selectedBossDatas = new();
@@ -26,10 +26,6 @@ public class Panel_SelectBoss : MonoBehaviour
             return selectedBossDatas[bossLevelIdx];
         }
     }
-
-    [SerializeField]
-    private Transform bossPrefabPosition;
-    private GameObject bossObject;
 
     #region UI
 
@@ -54,6 +50,9 @@ public class Panel_SelectBoss : MonoBehaviour
     [SerializeField]
     private GameObject pnl_huntedMark;
 
+    [SerializeField]
+    private Image img_selectedBoss;
+
     #endregion
 
     private void Start()
@@ -73,21 +72,18 @@ public class Panel_SelectBoss : MonoBehaviour
         List<BossData> bossDatas =
             BossDataManager.Instance.BossDatas[bossInfo.MobData.MobName];
 
-        SetSelectedBossData(bossDatas, bossInfo.MobData.MobLevel);
+        SetSelectedBossData(bossDatas, bossInfo.MobData.MobDifficulty);
     }
 
-    public void SetSelectedBossData(List<BossData> _selectedBossData, MobLevel level = 0)
+    public void SetSelectedBossData(List<BossData> _selectedBossData, MobDifficulty level = 0)
     {
-        if (bossObject != null)
-            Destroy(bossObject);
-
         selectedBossDatas = _selectedBossData;
 
         string bossName = selectedBossDatas[0].MobData.MobName;
-        string IdleImagePath = $"Mob/{bossName}/Prefab/{bossName}Prefab";
-        GameObject go = Resources.Load<GameObject>(IdleImagePath);
-        bossObject = Instantiate(go, bossPrefabPosition);
+        string IdleImagePath = $"Mob/{bossName}/Sprites/CharacterImage_{bossName}";
+        Sprite bossImage = Resources.Load<Sprite>(IdleImagePath);
 
+        img_selectedBoss.sprite = bossImage;
         bossLevelIdx = (int)level;
 
         txt_mobTitle.text = selectedBossDatas[bossLevelIdx].MobData.MobTitle;
@@ -117,7 +113,7 @@ public class Panel_SelectBoss : MonoBehaviour
 
     private void SetBossInfo()
     {
-        txt_bossLevel.text = selectedBossDatas[bossLevelIdx].MobData.MobLevel.ToString();
+        txt_bossLevel.text = selectedBossDatas[bossLevelIdx].MobData.MobDifficulty.ToString();
 
         SetAdditionalDescription();
         GameManager.Instance.SetBossFromLobby(CurBossData);

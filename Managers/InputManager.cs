@@ -14,6 +14,7 @@ public enum Direction
 
 public enum ControlState
 {
+    NotOperate,
     Normal,
     TagHero,
     SelectHero,
@@ -43,7 +44,7 @@ public class InputManager : MonoBehaviour
     private Direction verticalArrow = Direction.None;
     private Direction horizontalArrow = Direction.None;
 
-    public ControlState ContorlState = ControlState.Normal;
+    public ControlState CurContorlState = ControlState.NotOperate;
 
     private bool waitDoublePress = false;
 
@@ -52,7 +53,10 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (ContorlState.Equals(ControlState.Normal))
+        if (CurContorlState.Equals(ControlState.NotOperate))
+            return;
+
+        if (CurContorlState.Equals(ControlState.Normal))
         {
             if (Input.GetKeyUp(KeyCode.F1))
             {

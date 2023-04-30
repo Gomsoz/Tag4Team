@@ -2,21 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum DOPSkills
+public class DevilOfPrototype_Normal : BossBehavior
 {
-    SurpriseAttack,
-    GetAway,
-    Rush,
-}
-public class DevilOfPrototype_Easy : BossBehavior
-{
-    private void Start()
+    protected override void InitBoss()
     {
-        StartBossPattern();
-    }
+        base.InitBoss();
 
-    public void StartBossPattern()
-    {
         StartCoroutine(UpdateBehavior());
     }
 
@@ -57,5 +48,14 @@ public class DevilOfPrototype_Easy : BossBehavior
 
             yield return new WaitForSeconds(behavior.NextBehaviorTerm);
         }
+    }
+
+    public override void UpdateBossLevel(int level)
+    {
+        base.UpdateBossLevel(level);
+
+        mobSkills[(int)DOPSkills.SurpriseAttack].SetSkillLv(level);
+        mobSkills[(int)DOPSkills.GetAway].SetSkillLv(level);
+        mobSkills[(int)DOPSkills.Rush].SetSkillLv(level);
     }
 }

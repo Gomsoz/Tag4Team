@@ -36,7 +36,7 @@ public class UISet_PartyBuff : MonoBehaviour
 
     public void CountUp()
     {
-        if (PartySceneUIManager.Instance.Panel_PartyBuff.isAdjustableBuffPoint == false)
+        if (PartyScene.Instance.Panel_PartyBuff.isAdjustableBuffPoint == false)
             return;
 
         if (buffCounting >= 20)
@@ -44,7 +44,7 @@ public class UISet_PartyBuff : MonoBehaviour
 
         progressBar[buffCounting].color = Color.red;
         buffCounting++;
-        PartySceneUIManager.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, 1);
+        PartyScene.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, 1);
     }
 
     public void CountDown()
@@ -54,7 +54,7 @@ public class UISet_PartyBuff : MonoBehaviour
 
         buffCounting--;
         progressBar[buffCounting].color = Color.white;
-        PartySceneUIManager.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, -1);
+        PartyScene.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, -1);
     }
 
     public void ClearCouting()
@@ -64,7 +64,7 @@ public class UISet_PartyBuff : MonoBehaviour
             progressBar[buffCounting].color = Color.white;
         }
 
-        PartySceneUIManager.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, buffCounting);
+        PartyScene.Instance.Panel_PartyBuff.AdjustBuffPoint(buffName, buffCounting);
         buffCounting = 0;
     }
 }

@@ -8,6 +8,7 @@ public class BaseScene : MonoBehaviour
 {
     public Action SaveDataPublisher = null;
     public string SceneName { get; protected set; }
+    protected string fixedPreScene = string.Empty;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class BaseScene : MonoBehaviour
 
     protected virtual void InitScene()
     {
+        GameManager.Instance.SetExitBtn(true);
         GameManager.Instance.CurScene = this;
 
         LoadSceneData();
@@ -25,7 +27,11 @@ public class BaseScene : MonoBehaviour
     {
         SaveSceneData();
 
-        SceneManager.LoadScene(GameManager.Instance.PreSceneName);
+        if(fixedPreScene == string.Empty)
+            SceneManager.LoadScene(GameManager.Instance.PreSceneName);
+        else
+            SceneManager.LoadScene(fixedPreScene);
+        
     }
 
     public virtual void LoadSceneData()

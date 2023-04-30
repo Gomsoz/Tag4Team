@@ -7,12 +7,19 @@ using System;
 
 public class UI_HeroState : MonoBehaviour
 {
+    #region UI
+
     [SerializeField]
     private GameObject cooldownGroup;
     [SerializeField]
     private Image cooldownImage;
     [SerializeField]
     private TMP_Text cooldownText;
+
+    [SerializeField]
+    private Image img_hero;
+
+    #endregion
 
     [SerializeField]
     private GameObject deathMark;
@@ -22,7 +29,7 @@ public class UI_HeroState : MonoBehaviour
 
     public void SetHeroImage(Sprite sprite)
     {
-        GetComponent<Image>().sprite = sprite;
+        img_hero.sprite = sprite;
     }
 
     public void StartTagCooldown(float _totalTime, Action _callback)

@@ -8,14 +8,7 @@ public class PartySceneUIManager : MonoBehaviour
 
     public static PartySceneUIManager Instance { get => instance; }
 
-    [field: SerializeField]
-    public Panel_HeroList Panel_HeroList { get; private set; }
 
-    [field: SerializeField]
-    public Panel_PartyBuff Panel_PartyBuff { get; private set; }
-
-    [field:SerializeField]
-    public GameObject Panel_Character { get; private set; }
 
     [field:SerializeField]
     public Panel_FeatureSetting Panel_FeatureSetting { get; private set; }

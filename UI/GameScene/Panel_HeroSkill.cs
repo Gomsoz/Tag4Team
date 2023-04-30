@@ -9,7 +9,7 @@ public class Panel_HeroSkill : MonoBehaviour
 
     private const int maxSkill = 4;
 
-    public void SetSkillInformation(SkillCooldownInfo info, int skillNum)
+    public void SetSkillInformation(HeroSkill info, int skillNum)
     {
         heroSkills[skillNum].SetSkillInformation(info);
     }
